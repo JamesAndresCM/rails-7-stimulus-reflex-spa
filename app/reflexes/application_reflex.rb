@@ -9,4 +9,5 @@ class ApplicationReflex < StimulusReflex::Reflex
   #   delegate :current_user, to: :connection
   #
   # Learn more at: https://docs.stimulusreflex.com/reflexes#reflex-classes
+  def current_user = connection.current_user
 end
