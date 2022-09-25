@@ -6,10 +6,12 @@ export default class extends Controller {
   static targets = ["form", "tasks"];
   connect() {
     StimulusReflex.register(this);
-    Sortable.create(this.tasksTarget, {
-      handle: ".incomplete",
-      onEnd: (event) => this.reorder(event)
-    });
+    if (this.tasksTargets.length > 0) {
+      Sortable.create(this.tasksTarget, {
+        handle: ".incomplete",
+        onEnd: (event) => this.reorder(event)
+      });
+    }
   }
 
   reorder(event) {

@@ -22,6 +22,7 @@ export default class extends Controller {
   }
 
   destroy(event) {
+    event.preventDefault();
     const confirmation = confirm("are you sure")
     if (confirmation) {
       this.stimulate("TaskReflex#destroy", event.currentTarget)
