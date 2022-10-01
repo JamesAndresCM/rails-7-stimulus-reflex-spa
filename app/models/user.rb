@@ -4,4 +4,5 @@ class User < ApplicationRecord
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :validatable
   def name = "#{first_name} #{last_name}"
+  has_many :tasks, foreign_key: :creator_id
 end
