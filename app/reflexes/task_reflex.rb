@@ -39,9 +39,31 @@ class TaskReflex < ApplicationReflex
     else
       @task.update(completed_at: nil, completer: nil)
     end
+
+    cable_ready[ListChannel]
+      .remove(selector: "#task_#{@task.id}")
+      .insert_adjacent_html(
+        selector: "#list_#{@task.list_id} #{element.checked ? '#complete-tasks' : '#incomplete-tasks'}",
+        position: 'beforeend',
+        html: ApplicationController.render(@task)
+      )
+      .broadcast_to(@task.list)
   end
 
-  def destroy = @task.destroy
+  def destroy
+    @task.destroy
+
+    cable_ready[ListChannel]
+      .remove(selector: "#task_#{@task.id}")
+      .broadcast_to(@task.list)
+
+    return unless @task.list.tasks.empty?
+
+    cable_ready[ListChannel]
+      .remove_css_class(selector: "#list_#{@task.list_id} #no-tasks", name: 'd-none')
+      .broadcast_to(@task.list)
+  end
+
   def update
     @task.update(task_params)
     morph "#task_#{@task.id}", ApplicationController.render(@task)
@@ -52,7 +74,7 @@ class TaskReflex < ApplicationReflex
     morph :nothing
   end
 
-  def assign 
+  def assign
     @task.update(assignee_id: element.value)
     morph "#task-#{@task.id}-assignee", @task.assignee_name
   end
