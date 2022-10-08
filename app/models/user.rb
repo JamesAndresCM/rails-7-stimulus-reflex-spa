@@ -5,4 +5,6 @@ class User < ApplicationRecord
          :recoverable, :rememberable, :validatable
   def name = "#{first_name} #{last_name}"
   has_many :tasks, foreign_key: :creator_id
+  belongs_to :team
+  delegate :name, to: :team, prefix: true, allow_nil: true
 end
