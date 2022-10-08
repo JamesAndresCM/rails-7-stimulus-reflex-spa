@@ -72,3 +72,5 @@ gem "acts_as_list"
 
 
 gem "devise", "~> 4.8"
+
+gem 'devise-bootstrap-views', '~> 1.0'
