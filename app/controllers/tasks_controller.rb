@@ -8,7 +8,7 @@ class TasksController < ApplicationController
   private
 
   def set_task
-    @list = List.find(params[:list_id])
+    @list = current_team.lists.find(params[:list_id])
     @task = @list.tasks.includes(:comments).find(params[:id])
   end
 end
