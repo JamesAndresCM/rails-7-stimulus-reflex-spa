@@ -12,6 +12,9 @@
 
   <body>
     <div class="container">
+      <% if current_user %>
+        <h3><%= current_user.team_name %></h3>
+      <% end %>
       <%= yield %>
     </div>
   </body>
