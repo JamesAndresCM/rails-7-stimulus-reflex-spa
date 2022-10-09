@@ -18,7 +18,7 @@
       <%= form.text_field :name, skip_label: true, class: 'mr-2' %>
       <%= form.primary "Update" %>
     <% end %>
-    <%= select_tag :assignee, options_from_collection_for_select(current_team.users, :id, :name, task.assignee_id), prompt: 'Assign user', class: "form-select", data: { reflex: "change->Task#assign", id: task.id } %>
+    <%= select_tag :assignee, options_from_collection_for_select((Current.team_users || []), :id, :name, task.assignee_id), prompt: 'Assign user', class: "form-select", data: { reflex: "change->Task#assign", id: task.id } %>
   </div>
 
   <div class="d-flex">
