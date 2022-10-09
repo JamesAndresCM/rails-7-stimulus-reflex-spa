@@ -32,7 +32,8 @@ class CommentsController < ApplicationController
   end
 
   def set_task
-    @task = current_user.tasks.find_by(list_id: params[:list_id], id: params[:task_id])
+    @list = current_team.lists.find(params[:list_id])
+    @task = @list.tasks.find(params[:task_id])
     redirect_to root_path unless @task
   end
 end
