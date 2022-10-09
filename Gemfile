@@ -59,6 +59,12 @@ group :development do
   # gem "spring"
 end
 
+group :test do
+  gem 'rspec-rails'
+  gem 'factory_bot_rails'
+  gem 'stimulus_reflex_testing'
+end
+
 
 gem "importmap-rails", "~> 1.1"
 
